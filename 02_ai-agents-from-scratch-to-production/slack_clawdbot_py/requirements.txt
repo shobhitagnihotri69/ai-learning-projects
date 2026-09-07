@@ -1,0 +1,24 @@
+# Core Slack Bolt Framework
+slack-bolt>=1.20.0
+slack-sdk>=3.30.0
+
+# LLM APIs
+openai>=1.40.0
+anthropic>=0.34.0
+
+# Data validation & Configuration
+pydantic>=2.8.0
+pydantic-settings>=2.4.0
+python-dotenv>=1.0.1
+
+# Memory & Embeddings
+mem0ai>=0.1.20
+numpy>=1.26.0
+
+# Task Scheduling
+croniter>=2.0.5
+APScheduler>=3.10.4
+
+# Utilities
+rich>=13.7.0
+aiohttp>=3.9.0

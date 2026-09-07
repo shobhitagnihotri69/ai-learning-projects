@@ -1,0 +1,14 @@
+.env
+.env.*
+*.pem
+*.key
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
+04_miscellaneous/
+agent_patterns_commit.py
+agents_bootcamp_commit.py
+auto_commit.py
+nano_gpt_commit.py
+rl_agent_commit.py

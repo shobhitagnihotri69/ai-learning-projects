@@ -1,0 +1,16 @@
+# Local development tools only (NOT for training — that runs on Modal)
+# For training see SETUP.md
+
+# Modal cloud interface (required)
+modal>=0.64.0
+
+# For viewing rollouts and running make_charts.py locally
+numpy>=1.24.0
+matplotlib>=3.7.0
+Pillow>=10.0.0
+imageio>=2.31.0
+imageio-ffmpeg>=0.4.9
+
+# For serve.py (local inference server)
+aiohttp>=3.9.0
+aiohttp-cors>=0.7.0
