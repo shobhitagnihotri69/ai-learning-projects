@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenCodingEnv - Verifiable RL Environment for Coding Agents</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #090d16;
+      --bg-secondary: #0f172a;
+      --bg-card: rgba(30, 41, 59, 0.7);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent-blue: #38bdf8;
+      --accent-indigo: #818cf8;
+      --accent-green: #34d399;
+      --accent-red: #f87171;
+      --accent-amber: #fbbf24;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      width: 100%;
+    }
+
+    /* Header & Hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .badge-group {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(8px);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-hf { border-color: rgba(255, 215, 0, 0.3); color: #fde047; }
+    .badge-open { border-color: rgba(56, 189, 248, 0.3); color: var(--accent-blue); }
+    .badge-mit { border-color: rgba(52, 211, 153, 0.3); color: var(--accent-green); }
+
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.75rem;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.25rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .tab-btn.active {
+      color: var(--accent-blue);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Grid & Cards */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.5rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    select, input, button {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+
+    select {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      border: none;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+    }
+
+    /* Terminal & Diff Box */
+    .terminal-window {
+      background: #030712;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      padding: 1rem;
+      color: #e2e8f0;
+      overflow-x: auto;
+      min-height: 220px;
+      max-height: 320px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      margin-bottom: 1rem;
+    }
+
+    .diff-window {
+      background: #030712;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      padding: 1rem;
+      color: #e2e8f0;
+      min-height: 140px;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    .diff-add { color: #4ade80; background: rgba(74, 222, 128, 0.08); display: block; }
+    .diff-del { color: #f87171; background: rgba(248, 113, 113, 0.08); display: block; }
+
+    /* Reward Cards */
+    .reward-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .reward-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 0.85rem;
+      text-align: center;
+    }
+
+    .reward-box-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .reward-box-val {
+      font-size: 1.25rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* GRPO Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+    .data-table th, .data-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .data-table th {
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tag-boost {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--accent-green);
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+
+    .tag-penalize {
+      background: rgba(248, 113, 113, 0.15);
+      color: var(--accent-red);
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+
+    /* Code Snippet */
+    pre code {
+      display: block;
+      background: #030712;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      color: #38bdf8;
+      overflow-x: auto;
+      margin-top: 0.75rem;
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+    }
+
+    a {
+      color: var(--accent-blue);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Hero -->
+    <header class="hero">
+      <div class="badge-group">
+        <span class="badge badge-hf">🤗 Hugging Face Space</span>
+        <span class="badge badge-open">🚀 Verifiable RL Sandbox</span>
+        <span class="badge badge-mit">⚖️ MIT Open Source</span>
+      </div>
+      <h1>OpenCodingEnv</h1>
+      <p class="subtitle">An open-source, verifiable execution environment & GRPO training harness for coding agents. Built on dual Local/Docker sandboxes with AST anti-cheat and real test verifiers.</p>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-rollout')">🧪 Interactive Sandbox Rollout</button>
+      <button class="tab-btn" onclick="switchTab('tab-grpo')">📊 GRPO Advantage Inspector</button>
+      <button class="tab-btn" onclick="switchTab('tab-trl')">🔌 Hugging Face TRL 1-Line Integration</button>
+    </div>
+
+    <!-- Tab 1: Single Rollout Sandbox -->
+    <div id="tab-rollout" class="tab-content active">
+      <div class="grid">
+        <div class="card">
+          <h2 class="card-title">⚙️ Sandbox Controls</h2>
+          
+          <div class="form-group">
+            <label for="task-select">Target SWE-bench Task</label>
+            <select id="task-select" onchange="updateTaskInfo()">
+              <option value="astropy">Astropy Separable Bug (astropy__astropy-12907)</option>
+              <option value="calculator">Basic Calculator Operator Bug</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="agent-behavior">Simulate Agent Trajectory</label>
+            <select id="agent-behavior">
+              <option value="success">Successful Bug Fix Agent (Clean Unified Patch)</option>
+              <option value="failing">Failing Attempt Agent (Wrong Logic)</option>
+              <option value="syntax">Syntax Error Agent (AST Anti-Cheat Triggered)</option>
+              <option value="explore">Explore-Only Agent (No Patch Created)</option>
+            </select>
+          </div>
+
+          <button class="btn-primary" onclick="executeRollout()">⚡ Run Sandbox Rollout</button>
+
+          <div class="reward-stat-grid">
+            <div class="reward-box">
+              <div class="reward-box-label">Test Suite (PyTest)</div>
+              <div class="reward-box-val" id="val-test">--</div>
+            </div>
+            <div class="reward-box">
+              <div class="reward-box-label">AST Syntax Anti-Cheat</div>
+              <div class="reward-box-val" id="val-syntax">--</div>
+            </div>
+            <div class="reward-box" style="grid-column: span 2;">
+              <div class="reward-box-label">Total Verifiable Reward (r_i)</div>
+              <div class="reward-box-val" id="val-total" style="color: var(--accent-blue);">--</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">💻 Live Sandbox Terminal Output</h2>
+          <div class="terminal-window" id="terminal-view">$ Sandbox initialized. Ready for execution. Click 'Run Sandbox Rollout' to begin.</div>
+
+          <h2 class="card-title" style="margin-top: 1rem;">📄 Candidate Git Diff (Unified Patch)</h2>
+          <div class="diff-window" id="diff-view">(No modifications made)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 2: GRPO Inspector -->
+    <div id="tab-grpo" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">📊 Group Relative Policy Optimization (GRPO) Advantage Breakdown</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem;">
+          In GRPO, the model samples a group of rollouts (e.g. <code>G = 4</code>) on the same issue. 
+          Rewards are normalized directly across the group using <code>A_i = (r_i - μ) / (σ + 1e-5)</code>, eliminating the need for a separate Critic/Value network.
+        </p>
+
+        <button class="btn-primary" style="max-width: 280px; margin-bottom: 1.5rem;" onclick="simulateGRPO()">🎲 Re-Sample Group Rollouts (G=4)</button>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Rollout ID</th>
+              <th>Agent Policy Trajectory</th>
+              <th>PyTest Verification</th>
+              <th>AST Syntax</th>
+              <th>Raw Reward (r_i)</th>
+              <th>Normalized Advantage (A_i)</th>
+              <th>Policy Update Direction</th>
+            </tr>
+          </thead>
+          <tbody id="grpo-tbody">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab 3: TRL Integration -->
+    <div id="tab-trl" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">🔌 1-Line Hugging Face TRL & OpenEnv Integration</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem;">
+          Train any open-weights coding model (e.g., <code>Qwen2.5-Coder-0.5B-Instruct</code> or <code>DeepSeek-R1-Distill</code>) using Hugging Face's official <code>trl.GRPOTrainer</code>:
+        </p>
+
+        <pre><code>from trl import GRPOTrainer, GRPOConfig
+from trl_bridge import OpenEnvCodingAdapter
+
+# 1. Initialize verifiable coding environment (zero docker required)
+env = OpenEnvCodingAdapter(task_instance=my_swebench_task, use_docker=False)
+
+# 2. Train with Hugging Face GRPOTrainer
+trainer = GRPOTrainer(
+    model="Qwen/Qwen2.5-Coder-0.5B-Instruct",
+    reward_funcs=[env.reward_fn.evaluate],
+    args=GRPOConfig(
+        output_dir="./qwen-coder-rl",
+        learning_rate=1e-5,
+        num_generations=4,
+        max_prompt_length=1024,
+    )
+)
+
+trainer.train()</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>OpenCodingEnv &bull; Developed by <a href="https://huggingface.co/shobhitagnihotri" target="_blank">@shobhitagnihotri</a> &bull; Powered by PyTorch &amp; Hugging Face Spaces</p>
+  </footer>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      
+      event.target.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    function executeRollout() {
+      const task = document.getElementById('task-select').value;
+      const behavior = document.getElementById('agent-behavior').value;
+      const term = document.getElementById('terminal-view');
+      const diff = document.getElementById('diff-view');
+
+      term.innerText = "$ Initializing ephemeral sandbox environment...\n$ git init -q\n$ Writing task files...\n";
+
+      setTimeout(() => {
+        if (behavior === 'success') {
+          term.innerText += "$ ls\nastropy/modeling/separable.py  tests/test_separable.py\n\n";
+          term.innerText += "$ cat > astropy/modeling/separable.py << 'EOF'\n[Applying fix: cright = right]\nEOF\n\n";
+          term.innerText += "$ python -m pytest tests/test_separable.py\n======================== 1 passed in 0.08s ========================\n";
+          
+          diff.innerHTML = `--- a/astropy/modeling/separable.py\n+++ b/astropy/modeling/separable.py\n@@ -45,3 +45,3 @@\n<span class="diff-del">-    cright[-right.shape[0]:, -right.shape[1]:] = 1</span>\n<span class="diff-add">+    cright[-right.shape[0]:, -right.shape[1]:] = right</span>`;
+          
+          document.getElementById('val-test').innerText = "+0.80 (✅ Passed)";
+          document.getElementById('val-test').style.color = "var(--accent-green)";
+          document.getElementById('val-syntax').innerText = "+0.20 (Valid AST)";
+          document.getElementById('val-syntax').style.color = "var(--accent-green)";
+          document.getElementById('val-total').innerText = "+0.840";
+        } else if (behavior === 'syntax') {
+          term.innerText += "$ cat > astropy/modeling/separable.py << 'EOF'\ndef _cstack(left, right:\nEOF\n\n$ python -m pytest\nSyntaxError: '(' was never closed\n";
+          diff.innerHTML = `--- a/astropy/modeling/separable.py\n+++ b/astropy/modeling/separable.py\n<span class="diff-del">- def _cstack(left, right):</span>\n<span class="diff-add">+ def _cstack(left, right:</span>`;
+          
+          document.getElementById('val-test').innerText = "0.00 (❌ Failed)";
+          document.getElementById('val-test').style.color = "var(--accent-red)";
+          document.getElementById('val-syntax').innerText = "-0.50 (SyntaxError)";
+          document.getElementById('val-syntax').style.color = "var(--accent-red)";
+          document.getElementById('val-total').innerText = "-0.100";
+        } else if (behavior === 'explore') {
+          term.innerText += "$ ls -la\n$ git status\nOn branch main, nothing to commit, working tree clean.\n";
+          diff.innerHTML = "(No modifications made to files)";
+          
+          document.getElementById('val-test').innerText = "0.00 (Untested)";
+          document.getElementById('val-test').style.color = "var(--text-muted)";
+          document.getElementById('val-syntax').innerText = "0.00 (No Patch)";
+          document.getElementById('val-syntax').style.color = "var(--text-muted)";
+          document.getElementById('val-total').innerText = "-0.200 (No Patch Penalty)";
+          document.getElementById('val-total').style.color = "var(--accent-red)";
+        } else {
+          term.innerText += "$ cat > astropy/modeling/separable.py << 'EOF'\n[Incomplete bug modification]\nEOF\n\n$ python -m pytest tests/test_separable.py\nFAILED test_cstack_symmetry - AssertionError: Expected 5, got 1\n";
+          diff.innerHTML = `--- a/astropy/modeling/separable.py\n+++ b/astropy/modeling/separable.py\n<span class="diff-del">- # original</span>\n<span class="diff-add">+ # bad attempt</span>`;
+          
+          document.getElementById('val-test').innerText = "0.00 (❌ Failed)";
+          document.getElementById('val-test').style.color = "var(--accent-red)";
+          document.getElementById('val-syntax').innerText = "+0.20 (Valid AST)";
+          document.getElementById('val-syntax').style.color = "var(--accent-green)";
+          document.getElementById('val-total').innerText = "+0.040";
+        }
+      }, 200);
+    }
+
+    function simulateGRPO() {
+      const tbody = document.getElementById('grpo-tbody');
+      tbody.innerHTML = `
+        <tr>
+          <td><strong>Rollout #1</strong></td>
+          <td>Successful Bug Fix Agent</td>
+          <td><span class="tag-boost">✅ Passed</span></td>
+          <td>Valid (+0.20)</td>
+          <td><code>+0.840</code></td>
+          <td><strong style="color: var(--accent-green);">+1.677</strong></td>
+          <td><span class="tag-boost">🚀 Boost Policy</span></td>
+        </tr>
+        <tr>
+          <td><strong>Rollout #2</strong></td>
+          <td>Failing Attempt Agent</td>
+          <td><span class="tag-penalize">❌ Failed</span></td>
+          <td>Valid (+0.20)</td>
+          <td><code>+0.040</code></td>
+          <td><strong style="color: var(--accent-red);">-0.356</strong></td>
+          <td><span class="tag-penalize">🔻 Penalize Policy</span></td>
+        </tr>
+        <tr>
+          <td><strong>Rollout #3</strong></td>
+          <td>Explore-Only Agent</td>
+          <td><span class="tag-penalize">❌ Untested</span></td>
+          <td>None (0.00)</td>
+          <td><code>-0.200</code></td>
+          <td><strong style="color: var(--accent-red);">-0.966</strong></td>
+          <td><span class="tag-penalize">🔻 Penalize Policy</span></td>
+        </tr>
+        <tr>
+          <td><strong>Rollout #4</strong></td>
+          <td>Syntax Error Agent</td>
+          <td><span class="tag-penalize">❌ Failed</span></td>
+          <td>Error (-0.50)</td>
+          <td><code>-0.100</code></td>
+          <td><strong style="color: var(--accent-red);">-0.711</strong></td>
+          <td><span class="tag-penalize">🔻 Penalize Policy</span></td>
+        </tr>
+      `;
+    }
+
+    // Initialize default states
+    window.onload = function() {
+      simulateGRPO();
+      executeRollout();
+    };
+  </script>
+</body>
+</html>

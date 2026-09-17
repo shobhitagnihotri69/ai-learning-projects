@@ -5,3 +5,5 @@ peft>=0.12
 torch
 pandas
 numpy
+pytest>=7.0
+gradio>=4.0

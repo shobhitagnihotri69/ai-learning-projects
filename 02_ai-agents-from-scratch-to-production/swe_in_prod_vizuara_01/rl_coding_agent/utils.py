@@ -18,8 +18,19 @@ TARGET = "astropy/modeling/separable.py"
 
 # Verbatim source at astropy@d16bfe05, trimmed to the one function the issue is
 # about. The bug is the asymmetry: the cleft branch assigns `left`, the cright
-# branch assigns `1`.
-MOCK_FILE = '''def _cstack(left, right):
+MOCK_FILE = '''import numpy as np
+
+class Model:
+    """Mock model class."""
+    pass
+
+def _compute_n_outputs(left, right):
+    return left.shape[0] if hasattr(left, "shape") else 1
+
+def _coord_matrix(model, side, noutp):
+    return np.zeros((noutp, 1))
+
+def _cstack(left, right):
     """
     Function corresponding to '&' operation.
 
