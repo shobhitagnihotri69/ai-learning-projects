@@ -17,10 +17,10 @@
 
 ## 📊 Summary Metrics (As of September 15, 2026)
 
-- **Total PRs Submitted / Staged:** 19
-- **Merged PRs:** 1 (5.3%)
-- **Active Open / Staged PRs:** 17 (89.5%)
-- **Closed / Superseded:** 1 (5.3%)
+- **Total PRs Submitted / Staged:** 21
+- **Merged PRs:** 1 (4.8%)
+- **Active Open / Staged PRs:** 19 (90.5%)
+- **Closed / Superseded:** 1 (4.8%)
 - **Average Turnaround for Merged PRs:** **6.0 days** (Submitted Sept 9 → Merged Sept 15)
 
 ---
@@ -33,7 +33,7 @@
 
 ---
 
-## 🟢 Active Open Pull Requests Pipeline (7 Active Targets)
+## 🟢 Active Open Pull Requests Pipeline (19 Active Targets)
 
 | # | Repository & PR | Submission Date | Days Live | Status & Focus |
 | :-: | :--- | :---: | :---: | :--- |
@@ -54,6 +54,8 @@
 | 15 | **[deepnote/vscode-deepnote (Branch)](https://github.com/deepnote/vscode-deepnote/compare/main...shobhitagnihotri69:vscode-deepnote:fix/472-reinstall-stale-kernel-spec?expand=1)** | 2026-09-17 | 0 days | `fix(toolkit): reinstall kernel spec if it launches stale interpreter (fixes #472)` — Typecheck & lint 0 errors |
 | 16 | **[usemoss/moss (Branch)](https://github.com/usemoss/moss/compare/main...shobhitagnihotri69:moss:test/521-pipecat-elevenlabs-unit-tests?expand=1)** | 2026-09-17 | 0 days | `test(integrations): add offline unit tests for elevenlabs-moss and pipecat-moss (fixes #521)` — 29/29 tests pass (100% green) |
 | 17 | **[Graphify-Labs/graphify (Branch)](https://github.com/Graphify-Labs/graphify/compare/v8...shobhitagnihotri69:graphify:fix/3625-terraform-attribute-extraction?expand=1)** | 2026-09-17 | 0 days | `fix(terraform): preserve block attributes and enable attribute querying (fixes #3625)` — 10/10 terraform tests & 152/152 serve tests green |
+| 18 | **[evidentlyai/evidently (Branch)](https://github.com/evidentlyai/evidently/compare/main...shobhitagnihotri69:evidently:fix/1914-g-test-sample-size-normalization?expand=1)** | 2026-09-17 | 0 days | `fix(g_test): normalize expected frequencies for different sample sizes (fixes #1914)` — 100% verified with regression test |
+| 19 | **[humanlayer/homebrew-humanlayer (Branch)](https://github.com/humanlayer/homebrew-humanlayer/compare/main...shobhitagnihotri69:homebrew-humanlayer:chore/remove-deprecated-verified-parameter?expand=1)** | 2026-09-18 | 0 days | `chore(casks): remove deprecated verified parameter from url stanzas (fixes #8)` — Syntax verified with ruby -c |
 
 ---
 

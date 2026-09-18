@@ -52,7 +52,7 @@
 | 15 | **mcp-use** | [`mcp-use/mcp-use`](https://github.com/mcp-use/mcp-use) | 10,641 | TypeScript | 0.5d ago | 75 | **Issue #2554**: BasePath mounting routing rules. |
 | 16 | **OpenPipe** | [`OpenPipe/ART`](https://github.com/OpenPipe/ART) | 10,735 | Python | 0.2d ago | 143 | **Issue #883**: Retained sampled suffix logprobs causal prefix handling. |
 | 17 | **Firecrawl** | [`firecrawl/firecrawl-mcp-server`](https://github.com/firecrawl/firecrawl-mcp-server) | 7,472 | JavaScript | 0.0d ago | 138 | Official MCP server for Firecrawl web scraping. |
-| 18 | **Evidently AI** | [`evidentlyai/evidently`](https://github.com/evidentlyai/evidently) | 7,922 | Python | 6.1d ago | 304 | **Issue #1914**: G-test ValueError on differing dataset sample sizes. |
+| 18 | **Evidently AI** | [`evidentlyai/evidently`](https://github.com/evidentlyai/evidently) | 7,922 | Python | 6.1d ago | 304 | **[Branch Ready](https://github.com/evidentlyai/evidently/compare/main...shobhitagnihotri69:evidently:fix/1914-g-test-sample-size-normalization?expand=1)**: Normalize expected frequencies for different sample sizes in G-test (Fixes #1914). Regression test passed. |
 | 19 | **Deepnote** | [`deepnote/deepnote`](https://github.com/deepnote/deepnote) | 3,008 | TypeScript | 0.0d ago | 27 | Collaborative data notebook platform. |
 | 20 | **Luminal** | [`luminal-ai/luminal`](https://github.com/luminal-ai/luminal) | 2,980 | Rust | 0.6d ago | 46 | **Issue #370**: CUDA 13.x compiler graph dependency fixes. |
 | 21 | **Omnara** | [`omnara-ai/omnara`](https://github.com/omnara-ai/omnara) | 2,855 | Go | 0.1d ago | 22 | Model API usage tracking & proxy gateway. |
@@ -68,7 +68,7 @@
 | :-: | :--- | :--- | :-: | :---: | :-: | :--- |
 | 23 | **Corgea** | [`Corgea/cli`](https://github.com/Corgea/cli) | 5 | Rust | 0.1d ago | **Issue #128**: Local npm tarball package misclassification. |
 | 24 | **The Forecasting Co** | [`theforecastingcompany/tfc-t0`](https://github.com/theforecastingcompany/tfc-t0) | 36 | Jupyter / Py | 0.0d ago | Time-series foundation models. Active daily commits. |
-| 25 | **HumanLayer** | [`humanlayer/homebrew-humanlayer`](https://github.com/humanlayer/homebrew-humanlayer) | 32 | Ruby | 0.6d ago | Homebrew distribution formula for HumanLayer agent tools. |
+| 25 | **HumanLayer** | [`humanlayer/homebrew-humanlayer`](https://github.com/humanlayer/homebrew-humanlayer) | 32 | Ruby | 0.6d ago | **[Branch Ready](https://github.com/humanlayer/homebrew-humanlayer/compare/main...shobhitagnihotri69:homebrew-humanlayer:chore/remove-deprecated-verified-parameter?expand=1)**: Remove deprecated 'verified' parameter from cask url stanzas (Fixes #8). Syntax verified. |
 | 26 | **Mindee** | [`mindee/mindee-api-nodejs`](https://github.com/mindee/mindee-api-nodejs) | 26 | TypeScript | 0.0d ago | Document parsing & OCR SDK for Node.js. |
 | 27 | **Trainy** | [`Trainy-ai/pluto-server`](https://github.com/Trainy-ai/pluto-server) | 2 | TypeScript | 1.4d ago | Distributed GPU cluster training orchestrator. |
 | 28 | **Polymath Robotics**| [`polymathrobotics/protective-stop`](https://github.com/polymathrobotics/protective-stop) | 8 | C | 0.4d ago | Autonomous vehicle safety & hardware-stop daemon. |
@@ -107,6 +107,8 @@
 12. **`deepnote/vscode-deepnote`**: [PR Branch](https://github.com/deepnote/vscode-deepnote/compare/main...shobhitagnihotri69:vscode-deepnote:fix/472-reinstall-stale-kernel-spec?expand=1) (Fixes #472: reinstall stale kernel spec when Python interpreter changes).
 13. **`usemoss/moss`**: [PR Branch](https://github.com/usemoss/moss/compare/main...shobhitagnihotri69:moss:test/521-pipecat-elevenlabs-unit-tests?expand=1) (Fixes #521: offline unit test suite for elevenlabs-moss and pipecat-moss, 29/29 tests pass).
 14. **`Graphify-Labs/graphify`**: [PR Branch](https://github.com/Graphify-Labs/graphify/compare/v8...shobhitagnihotri69:graphify:fix/3625-terraform-attribute-extraction?expand=1) (Fixes #3625: preserve Terraform block attributes and enable attribute querying, 10/10 terraform tests pass).
+15. **`evidentlyai/evidently`**: [PR Branch](https://github.com/evidentlyai/evidently/compare/main...shobhitagnihotri69:evidently:fix/1914-g-test-sample-size-normalization?expand=1) (Fixes #1914: normalize expected frequencies for different sample sizes in G-test drift detector, regression test passed).
+16. **`humanlayer/homebrew-humanlayer`**: [PR Branch](https://github.com/humanlayer/homebrew-humanlayer/compare/main...shobhitagnihotri69:homebrew-humanlayer:chore/remove-deprecated-verified-parameter?expand=1) (Fixes #8: remove deprecated 'verified' parameter from cask url stanzas, syntax verified).
 
 ---
 
