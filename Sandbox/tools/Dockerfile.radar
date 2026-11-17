@@ -1,0 +1,16 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY startup_radar.py /app/startup_radar.py
+COPY radar_daemon.py /app/radar_daemon.py
+
+ENV PYTHONUNBUFFERED=1
+ENV RADAR_INTERVAL=14400
+
+CMD ["python3", "/app/radar_daemon.py"]
+
