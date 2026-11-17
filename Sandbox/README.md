@@ -2,7 +2,7 @@
 
 > **A Comprehensive Go-To-Market (GTM) Blueprint, Market Intelligence Atlas, and Growth Engine for Next-Generation AI Agent Sandboxes and MicroVM Runtimes.**
 > 
-> *Authored by Shobhit Agnihotri in collaboration with Claude Code & Antigravity.*
+> *Authored by Shobhit Agnihotri.*
 
 ---
 
